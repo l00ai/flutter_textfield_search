@@ -32,6 +32,9 @@ class TextFieldSearch extends StatefulWidget {
   /// The number of matched items that are viewable in results
   final int itemsInView;
 
+
+  final dynamic initialValue;
+
   /// Creates a TextFieldSearch for displaying selected elements and retrieving a selected element
   const TextFieldSearch(
       {Key? key,
@@ -43,6 +46,7 @@ class TextFieldSearch extends StatefulWidget {
       this.getSelectedValue,
       this.decoration,
       this.scrollbarDecoration,
+      this.initialValue,
       this.itemsInView = 3,
       this.minStringLength = 2})
       : super(key: key);
@@ -161,6 +165,14 @@ class _TextFieldSearchState extends State<TextFieldSearch> {
 
   void initState() {
     super.initState();
+
+    if(widget.initialValue != null){
+      setState(() {
+        filteredList = [widget.initialValue];
+        widget.controller.text = filteredList![0].name;
+        widget.getSelectedValue!(filteredList![0]);
+      });
+    }
 
     if (widget.scrollbarDecoration?.controller != null) {
       _scrollController = widget.scrollbarDecoration!.controller;
